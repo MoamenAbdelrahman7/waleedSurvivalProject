@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="formContainer">
+        <h2>Sign Up</h2>
+        <form action="{% url 'sign_up' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="birthday">Birth Day</label>
+            <input type="date" id="birthday" name="birthday" required>
+
+            <label for="username">User name</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="personal_img">Personal image</label>
+            <input type="file" name="personal_img" id="personal_img">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+            <small id="passwordHint"></small><br>
+            <input type="submit" id="submitBt" value="Sign up" disabled>
+
+        </form>
+        <div>
+            <a href="{% url 'log_in' %}" style="color: white;">Log In</a>
+        </div>
+
+    </div>
+    <div style="height: 200px;">
+      &nbsp;
+    </div>
+
+    <script>
+        // confirm password
+        const passwordField1=document.getElementById("password");
+        const passwordField2=document.getElementById("confirmPassword");
+        const passwordHint=document.getElementById("passwordHint");
+        const submitBt=document.getElementById("submitBt");
+        // const submitBt=document.getElementById("submitBt");
+        passwordField2.addEventListener("blur",function(){
+            const passwordField1_value=passwordField1.value;
+            const passwordField2_value=passwordField2.value;
+            if(passwordField1_value!=passwordField2_value){
+                passwordField2.style.border="1px solid red";
+                passwordHint.innerHTML="Passwords is not matching";
+                passwordHint.style.color="red";
+            }
+            else{
+                passwordField1.style.border="1px solid green";
+                passwordField2.style.border="1px solid green";
+                passwordHint.innerHTML="";
+                passwordHint.style.color="";
+                submitBt.removeAttribute("disabled","");
+            }
+        });
+        
+
+    </script>
+
+</body>
+</html>

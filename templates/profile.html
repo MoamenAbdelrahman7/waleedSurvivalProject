@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+</head>
+<body>
+    <header>
+       {% include 'parts/nav.html' %}
+    </header>
+
+    <div class="container">
+        <div id="personalInfo">
+            <img src="{{ user.personal_img.url }}" alt="profile image" style="margin: 10px;">
+            <h1 style="margin: 10px;">{{ user.name | title }}</h1>
+        </div>
+
+        <div id="profileInfo">
+        <span>Followers:&nbsp;&nbsp;&nbsp;0</span>
+        <span>Following:&nbsp;&nbsp;&nbsp;0</span>
+        <span>Likes:&nbsp;&nbsp;&nbsp;0</span>
+        </div>
+
+        <div class="userVideos">
+            {% for video in profile_videos %}
+                <video src="{{ video.video_url.url }}"></video>
+            {% endfor %}
+
+        </div>
+    </div>
+    <script>
+        const videos = document.querySelectorAll('video');
+
+        // Function to pause all videos except the provided one
+        function pauseAllExcept(video) {
+            videos.forEach(function (v) {
+                if (v !== video) {
+                    v.pause();
+                }
+            });
+        }
+
+        for (const video of videos) {
+            video.addEventListener('click', function () {
+                if (video.paused) {
+                    pauseAllExcept(video);
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            // Add mouseover event listener
+            video.addEventListener('mouseover', function () {
+                pauseAllExcept(video);
+                if (video.paused) {
+                    video.play();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

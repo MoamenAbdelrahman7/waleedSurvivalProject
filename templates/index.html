@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<style>
+    a{
+        text-decoration: none;
+        color: white;
+        font-family: 'Lucida Grande', Arial, sans-serif;
+        font-size: 1.5rem;
+    }
+</style>
+<body>
+       {% include 'parts/nav.html' %}
+
+    <div class="app__videos">
+        {% for video in videos %}
+
+        <!-- video starts -->
+        <div class="video">
+        {% if forloop.first %}
+            <video class="video__player" src="{{ video.video_url.url }}" loop autoplay></video>
+        {% else %}
+            <video class="video__player" src="{{ video.video_url.url }}" loop></video>
+
+        {% endif %}
+            <!-- sidebar -->
+            <div class="videoSidebar">
+                <div class="videoSidebar__button">
+                    <!-- <i class="bi bi-heart" style="color: red;"></i> -->
+                    <span class="material-icons" id="love_icon_vid{{ video.id }}"> favorite_border </span>
+                    <p id="love_count_vid{{ video.id }}">{{ video.love }}</p>
+                </div>
+
+                <div class="videoSidebar__button">
+                    <span class="material-icons" style="color: lightgray;"> message </span>
+                    <p>{{ video.comment }}</p>
+                </div>
+
+                <div class="videoSidebar__button">
+                    <span class="material-icons"> share </span>
+                    <p>{{ video.share }}</p>
+                </div>
+            </div>
+
+            <!-- footer -->
+            <div class="videoFooter">
+                <div class="videoFooter__text">
+                    <h3><a href="{% url 'profile' %}">{{ video.user.username}} @</a></h3>
+                    <p class="videoFooter__description" style="max-width:100px;">{{ video.description }}</p>
+
+                    <div class="videoFooter__ticker">
+                        <span class="material-icons videoFooter__icon"> music_note </span>
+                        <marquee>#{{ video.tag1 | capfirst }}&nbsp;&nbsp;#{{ video.tag2 | capfirst }}&nbsp;&nbsp;#{{ video.tag3 | capfirst }}&nbsp;&nbsp;</marquee>
+                    </div>
+                </div>
+                <img
+                    src="https://static.thenounproject.com/png/934821-200.png"
+                    alt=""
+                    class="videoFooter__record"
+                />
+            </div>
+        </div>
+        <!-- video ends -->
+        {% endfor %}
+
+
+    </div>
+
+    <script>
+        const videos = document.querySelectorAll('.video__player');
+
+        // Function to pause all videos except the provided one
+        function pauseAllExcept(video) {
+            videos.forEach(function (v) {
+                if (v !== video) {
+                    v.pause();
+                }
+            });
+        }
+
+        for (const video of videos) {
+            video.addEventListener('click', function () {
+                if (video.paused) {
+                    pauseAllExcept(video);
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            // Add mouseover event listener
+            video.addEventListener('mouseover', function () {
+                pauseAllExcept(video);
+                if (video.paused) {
+                    video.play();
+                }
+            });
+        }
+
+        // Function to check if a video is in the viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to handle scroll event
+        function handleScroll() {
+            for (let i = 0; i < videos.length; i++) {
+                if (isElementInViewport(videos[i])) {
+                    // Pause all other videos
+                    pauseAllExcept(videos[i]);
+                    break; // Stop iterating further
+                }
+            }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+    </script>
+
+    <script src='{% static "script.js" %}' ></script>
+</body>
+</html>

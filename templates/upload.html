@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload video</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+    <!-- 
+
+        title=models.CharField(max_length=255)
+    category=models.CharField(max_length=100)
+    video_url=models.FileField(upload_to=f"Vedios/")
+    description=models.CharField(max_length=510)
+    tag1=models.CharField(max_length=100)
+    tag2=models.CharField(max_length=100)
+    tag3=models.CharField(max_length=100)
+
+     -->
+    <header>
+       {% include 'parts/nav.html' %}
+    </header>
+     <div class="formContainer" style="width: 50%">
+        <h2>Upload Video</h2>
+        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+
+            <label for="category">Category</label>
+            <input type="text" name="category" id="category">
+
+            <label for="video_url">Upload Video</label>
+            <input type="file" name="video_url" id="video_url">
+
+            <label for="description">Description</label>
+            <textarea name="description" id="description" rows="4" cols="40"></textarea>
+
+            <label for="tag1">Tag 1</label>
+            <input type="text" name="tag1" id="tag1">
+            <label for="tag2">Tag 2</label>
+            <input type="text" name="tag2" id="tag2">
+            <label for="tag1">Tag 3</label>
+            <input type="text" name="tag3" id="tag3"><br>
+
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>

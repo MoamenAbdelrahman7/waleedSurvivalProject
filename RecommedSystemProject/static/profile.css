@@ -1,0 +1,67 @@
+.container{
+    width: 100vw;
+    background-color: rgb(46, 44, 44);
+    color:white;
+    margin: 0;    
+}
+
+#personalInfo{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    padding: 15px;
+    
+    
+}
+
+
+
+img{
+    width: 200px;
+    height:200px;
+    border-radius:30%;
+}
+
+
+#profileInfo{
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.userVideos{
+    width: 80%;
+    height: auto;
+    margin:100px auto;
+    padding:100px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 30px;
+}
+
+video{
+    width: 200px;
+    height:350px;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
