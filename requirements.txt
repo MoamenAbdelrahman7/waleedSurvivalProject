@@ -6,7 +6,7 @@ docker==7.0.0
 idna==3.7
 packaging==24.0
 pillow==10.3.0
-pywin32==306
+pywin32==220
 requests==2.31.0
 sqlparse==0.5.0
 tzdata==2024.1
